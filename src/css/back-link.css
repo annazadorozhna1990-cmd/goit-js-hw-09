@@ -27,3 +27,29 @@
   opacity: 1;
   animation-play-state: running;
 }
+body {
+  background-color: #ffffff;
+}
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.gallery-item {
+  flex: 0 0 calc((100% - 32px) / 3);
+}
