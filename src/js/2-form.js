@@ -7,7 +7,7 @@ let formData = {
   message: '',
 };
 
-// 2️⃣ Восстанавливаем данные из localStorage при загрузке
+// 2️⃣ Восстанавливаем данные из localStorage при загрузке страницы
 const savedData = localStorage.getItem(STORAGE_KEY);
 if (savedData) {
   const parsedData = JSON.parse(savedData);
@@ -22,29 +22,31 @@ if (savedData) {
 // 3️⃣ Обработчик input — обновляем formData и localStorage
 form.addEventListener('input', event => {
   const { name, value } = event.target;
-  if (!name) return; // только для полей с name
+
+  if (!name) return; // игнорируем элементы без name
 
   formData[name] = value; // сохраняем актуальное значение
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 });
 
-// 4️⃣ Обработчик submit — валидация, логирование и очистка
+// 4️⃣ Обработчик submit — trim, проверка, логирование, очистка
 form.addEventListener('submit', event => {
   event.preventDefault();
 
-  const trimmedData = {
-    email: formData.email.trim(),
-    message: formData.message.trim(),
-  };
+  // убираем пробелы прямо в formData
+  formData.email = formData.email.trim();
+  formData.message = formData.message.trim();
 
-  if (!trimmedData.email || !trimmedData.message) {
+  // проверка на пустые поля
+  if (!formData.email || !formData.message) {
     alert('Fill please all fields');
     return;
   }
 
-  console.log(trimmedData);
+  // логируем актуальный объект formData
+  console.log(formData);
 
-  // Очистка
+  // очистка
   localStorage.removeItem(STORAGE_KEY);
   formData = { email: '', message: '' };
   form.reset();
